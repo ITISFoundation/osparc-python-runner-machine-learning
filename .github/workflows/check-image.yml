@@ -32,6 +32,10 @@ jobs:
         with:
           args: docker compose build
       - name: test Tensorflow
-        run: make run-tensorflow-local
+        uses: docker://itisfoundation/ci-service-integration-library:v2.0.11
+        with:
+          args: make run-tensorflow-local
       - name: test PyTorch
-        run: make run-pytorch-local
+        uses: docker://itisfoundation/ci-service-integration-library:v2.0.11
+        with:
+          args: make run-pytorch-local
