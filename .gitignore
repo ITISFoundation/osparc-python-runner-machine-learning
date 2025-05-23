@@ -5,3 +5,4 @@ docker-compose.yml
 *.ignore.*
 
 .venv/
+docker-compose.yml
