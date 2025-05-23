@@ -1,0 +1,9 @@
+services:
+  runner-ml:
+    image: simcore/services/comp/${IMAGE_TO_RUN}:${TAG_TO_RUN}
+    environment:
+      - INPUT_FOLDER=/tmp/inputs
+      - OUTPUT_FOLDER=/tmp/outputs
+    volumes:
+      - ${PWD}/${VALIDATION_DIR}/inputs:/tmp/inputs
+      - ${PWD}/${VALIDATION_DIR}/outputs:/tmp/outputs
