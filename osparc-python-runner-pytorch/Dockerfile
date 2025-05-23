@@ -11,4 +11,4 @@ COPY --chown=${SC_USER_NAME}:${SC_USER_NAME} osparc_python_runner_pytorch osparc
 # copy commong main.py
 RUN mv main.py osparc_python_runner_pytorch/main.py
 
-RUN uv pip install --system -r osparc_python_runner_pytorch/requirements.txt
+RUN uv pip install -r osparc_python_runner_pytorch/requirements.txt
