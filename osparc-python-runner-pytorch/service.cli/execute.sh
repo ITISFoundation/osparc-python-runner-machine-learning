@@ -7,11 +7,11 @@ IFS=$(printf '\n\t')
 cd /home/scu/osparc_python_runner_pytorch
 
 echo "starting service as"
-echo   User    : "$(id "$(whoami)")"
-echo   Workdir : "$(pwd)"
+echo " User    : $(id "$(whoami)")"
+echo " Workdir : $(pwd)"
 echo "..."
 echo
 
-python3 main.py setup
+python main.py setup
 /bin/sh main.sh
-python3 main.py teardown
+python main.py teardown
