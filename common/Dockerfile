@@ -19,6 +19,7 @@ ARG PYTHON_VERSION=3.12.10
 RUN uv python install ${PYTHON_VERSION} --default --preview && \
     uv venv .venv
 ENV PATH="/home/${SC_USER_NAME}/.venv/bin:$PATH"
+ENV UV_HTTP_TIMEOUT=120
 
 FROM base AS production
 
