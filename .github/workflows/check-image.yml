@@ -32,8 +32,6 @@ jobs:
         with:
           args: docker compose build
       - name: test Tensorflow
-        with:
-          args: make run-tensorflow-local
+        run: make run-tensorflow-local
       - name: test PyTorch
-        with:
-          args: make run-pytorch-local
+        run: make run-pytorch-local
