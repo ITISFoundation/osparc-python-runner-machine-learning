@@ -132,15 +132,14 @@ def teardown():
     for n in range(1, NUM_OUTPUTS + 1):
         output_path = OUTPUT_FOLDER / f"output_{n}"
         archive_file_path = OUTPUT_FOLDER / OUTPUT_FILE_TEMPLATE.format(n)
-        if any(output_path.iterdir()):  # Only zip if directory is not empty
-            _logger.info("Zipping %s into %s...", output_path, archive_file_path)
-            shutil.make_archive(
-                f"{(archive_file_path.parent / archive_file_path.stem)}",
-                format="zip",
-                root_dir=output_path,
-                logger=_logger,
-            )
-            _logger.info("Zipping %s into %s done", output_path, archive_file_path)
+        _logger.info("Zipping %s into %s...", output_path, archive_file_path)
+        shutil.make_archive(
+            f"{(archive_file_path.parent / archive_file_path.stem)}",
+            format="zip",
+            root_dir=output_path,
+            logger=_logger,
+        )
+        _logger.info("Zipping %s into %s done", output_path, archive_file_path)
     _logger.info("Zipping done.")
 
 
