@@ -1,6 +1,3 @@
-import os
-
-from pathlib import Path
 import requests
 import tensorflow as tf
 

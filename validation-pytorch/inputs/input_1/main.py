@@ -1,12 +1,10 @@
 import torch
-import os
 import requests
-from pathlib import Path
 
 response = requests.get("https://www.google.com")
 print(response)
 
-msg = torch.tensor("Hello, PyTorch!")
+msg = torch.tensor([[1, 2, 3], [4, 5, 6]])
 print(msg)
 # Example tensor operation
 a = torch.tensor([1.0, 2.0, 3.0])
