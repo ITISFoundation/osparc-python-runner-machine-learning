@@ -71,14 +71,14 @@ run-pytorch-local: ## runs pytorch image with local configuration
 	IMAGE_TO_RUN=${IMAGE_PYTORCH} \
 	TAG_TO_RUN=${TAG_PYTORCH} \
 	VALIDATION_DIR=validation-pytorch \
-	docker compose --file docker-compose-local.yml up --abort-on-container-exit --exit-code-from runner-ml-1
+	docker compose --file docker-compose-local.yml up --abort-on-container-exit --exit-code-from runner-ml
 
 .PHONY: run-tensorflow-local
 run-tensorflow-local: ## runs tensorflow image with local configuration
 	IMAGE_TO_RUN=${IMAGE_TENSORFLOW} \
 	TAG_TO_RUN=${TAG_TENSORFLOW} \
 	VALIDATION_DIR=validation-tensorflow \
-	docker compose --file docker-compose-local.yml up --abort-on-container-exit --exit-code-from runner-ml-1
+	docker compose --file docker-compose-local.yml up --abort-on-container-exit --exit-code-from runner-ml
 
 .PHONY: publish-local
 publish-local: ## push to local throw away registry to test integration
