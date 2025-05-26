@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Dict
 
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("osparc-python-main")
+_logger = logging.getLogger("osparc-python-main")
 
 
 ENVIRONS = ["INPUT_FOLDER", "OUTPUT_FOLDER"]
@@ -26,7 +26,7 @@ OUTPUT_FILE_TEMPLATE = "output_{}.zip"
 
 
 def _find_user_code_entrypoint(code_dir: Path) -> Path:
-    logger.info("Searching for script main entrypoint ...")
+    _logger.info("Searching for script main entrypoint ...")
     code_files = list(code_dir.rglob("*.py"))
 
     if not code_files:
@@ -40,19 +40,19 @@ def _find_user_code_entrypoint(code_dir: Path) -> Path:
             raise ValueError(f"Many entrypoints found: {code_files}")
 
     main_py = code_files[0]
-    logger.info("Found %s as main entrypoint", main_py)
+    _logger.info("Found %s as main entrypoint", main_py)
     return main_py
 
 
 def _ensure_pip_requirements(code_dir: Path) -> Path:
-    logger.info("Searching for requirements file ...")
+    _logger.info("Searching for requirements file ...")
     requirements = list(code_dir.rglob("requirements.txt"))
     if len(requirements) > 1:
         raise ValueError(f"Many requirements found: {requirements}")
 
     elif not requirements:
         # deduce requirements using pipreqs
-        logger.info("Not found. Recreating requirements ...")
+        _logger.info("Not found. Recreating requirements ...")
         requirements = code_dir / "requirements.txt"
         subprocess.run(
             f"pipreqs --savepath={requirements} --force {code_dir}".split(),
@@ -65,7 +65,7 @@ def _ensure_pip_requirements(code_dir: Path) -> Path:
 
     else:
         requirements = requirements[0]
-        logger.info(f"Found: {requirements}")
+        _logger.info(f"Found: {requirements}")
     return requirements
 
 
@@ -78,7 +78,7 @@ def _ensure_output_subfolders_exist() -> Dict[str, str]:
         # NOTE: exist_ok for forward compatibility in case they are already created
         output_sub_folder.mkdir(parents=True, exist_ok=True)
         output_envs[output_sub_folder_env] = f"{output_sub_folder}"
-    logger.info(
+    _logger.info(
         "Output ENVs available: %s",
         json.dumps(output_envs, indent=2),
     )
@@ -89,7 +89,7 @@ def _ensure_input_environment() -> Dict[str, str]:
     input_envs = {
         f"INPUT_{n}": os.environ[f"INPUT_{n}"] for n in range(1, NUM_INPUTS + 1)
     }
-    logger.info(
+    _logger.info(
         "Input ENVs available: %s",
         json.dumps(input_envs, indent=2),
     )
@@ -99,13 +99,13 @@ def _ensure_input_environment() -> Dict[str, str]:
 def setup():
     input_envs = _ensure_input_environment()
     output_envs = _ensure_output_subfolders_exist()
-    logger.info("Available data:")
+    _logger.info("Available data:")
     os.system("ls -tlah")
 
     user_code_entrypoint = _find_user_code_entrypoint(INPUT_FOLDER)
     requirements_txt = _ensure_pip_requirements(INPUT_FOLDER)
 
-    logger.info("Preparing launch script ...")
+    _logger.info("Preparing launch script ...")
     bash_input_env_export = [f"export {env}={path}" for env, path in input_envs.items()]
     bash_output_env_export = [
         f"export {env}='{path}'" for env, path in output_envs.items()
@@ -123,24 +123,25 @@ def setup():
         'echo "DONE ..."',
     ]
     main_sh_path = Path("main.sh")
-    logger.info("main_sh_path: %s", main_sh_path.absolute())  # TODO: remove this line
+    _logger.info("main_sh_path: %s", main_sh_path.absolute())  # TODO: remove this line
     main_sh_path.write_text("\n".join(script))
 
 
 def teardown():
-    logger.info("Zipping output...")
+    _logger.info("Zipping output...")
     for n in range(1, NUM_OUTPUTS + 1):
         output_path = OUTPUT_FOLDER / f"output_{n}"
         archive_file_path = OUTPUT_FOLDER / OUTPUT_FILE_TEMPLATE.format(n)
-        logger.info("Zipping %s into %s...", output_path, archive_file_path)
-        shutil.make_archive(
-            f"{(archive_file_path.parent / archive_file_path.stem)}",
-            format="zip",
-            root_dir=output_path,
-            logger=logger,
-        )
-        logger.info("Zipping %s into %s done", output_path, archive_file_path)
-    logger.info("Zipping done.")
+        if any(output_path.iterdir()):  # Only zip if directory is not empty
+            _logger.info("Zipping %s into %s...", output_path, archive_file_path)
+            shutil.make_archive(
+                f"{(archive_file_path.parent / archive_file_path.stem)}",
+                format="zip",
+                root_dir=output_path,
+                logger=_logger,
+            )
+            _logger.info("Zipping %s into %s done", output_path, archive_file_path)
+    _logger.info("Zipping done.")
 
 
 if __name__ == "__main__":
@@ -151,4 +152,4 @@ if __name__ == "__main__":
         else:
             teardown()
     except Exception as err:  # pylint: disable=broad-except
-        logger.error("%s . Stopping %s", err, action)
+        _logger.error("%s . Stopping %s", err, action)
