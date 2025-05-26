@@ -32,10 +32,16 @@ define _bumpversion
 		sh -c "cd /ml-runner && bump2version --verbose --list --config-file $(1) $(subst $(2),,$@)"
 endef
 
-.PHONY: version-patch version-minor version-major
-version-patch version-minor version-major: .bumpversion.cfg ## increases service's version
+.PHONY: version-tensorflow-patch version-tensorflow-minor version-tensorflow-major
+version-tensorflow-patch version-tensorflow-minor version-tensorflow-major: .bumpversion-tensorflow.cfg ## increases tensroflow service's version
 	@make compose-spec
-	@$(call _bumpversion,$<,version-)
+	@$(call _bumpversion,$<,version-tensorflow-)
+	@make compose-spec
+
+.PHONY: version-pytorch-patch version-pytorch-minor version-pytorch-major
+version-pytorch-patch version-pytorch-minor version-pytorch-major: .bumpversion-pytorch.cfg ## increases pytorchservice's version
+	@make compose-spec
+	@$(call _bumpversion,$<,version-pytorch-)
 	@make compose-spec
 
 
