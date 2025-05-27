@@ -1,0 +1,68 @@
+name: oSparc Python Runner Tensorflow
+key: simcore/services/comp/osparc-python-runner-tensorflow
+type: computational
+integration-version: 2.0.0
+version: 1.1.0
+description: https://raw.githubusercontent.com/ZurichMedTech/s4l-assets/refs/heads/main/app/full/services/simcore_services_comp_osparc-python-runner-tensorflow.md
+icon: https://raw.githubusercontent.com/ZurichMedTech/s4l-assets/main/app/icons/s4l/simcore_services_comp_osparc-python-runner-tensorflow.png
+thumbnail: https://raw.githubusercontent.com/ZurichMedTech/s4l-assets/main/app/thumbnails/s4l/simcore_services_comp_osparc-python-runner-tensorflow.png
+contact: guidon@itis.swiss
+authors:
+  - name: Manuel Guidon
+    email: guidon@itis.swiss
+    affiliation: IT'IS Foundation
+inputs:
+  input_1:
+    displayOrder: 1
+    label: Input data
+    description: Any code, requirements or data file
+    type: data:*/*
+  input_2:
+    displayOrder: 2
+    label: Additional input data - optional
+    description: Any additional input data file
+    type: data:*/*
+  input_3:
+    displayOrder: 3
+    label: Additional input data - optional
+    description: Any additional input data file
+    type: data:*/*
+  input_4:
+    displayOrder: 4
+    label: Additional input data - optional
+    description: Any additional input data file
+    type: data:*/*
+  input_5:
+    displayOrder: 5
+    label: Additional input data - optional
+    description: Any additional input data file
+    type: data:*/*
+outputs:
+  output_1:
+    displayOrder: 1
+    label: Output data
+    description: The data produced by the script and saved under OUTPUT_FOLDER/output_1 as output_1.zip
+    type: data:*/*
+    fileToKeyMap:
+      output_1.zip: output_1
+  output_2:
+    displayOrder: 2
+    label: Output data
+    description: The data produced by the script and saved under OUTPUT_FOLDER/output_2 as output_2.zip
+    type: data:*/*
+    fileToKeyMap:
+      output_2.zip: output_2
+  output_3:
+    displayOrder: 3
+    label: Output data
+    description: The data produced by the script and saved under OUTPUT_FOLDER/output_3 as output_3.zip
+    type: data:*/*
+    fileToKeyMap:
+      output_3.zip: output_3
+  output_4:
+    displayOrder: 4
+    label: Output data
+    description: The data produced by the script and saved under OUTPUT_FOLDER/output_4 as output_4.zip
+    type: data:*/*
+    fileToKeyMap:
+      output_4.zip: output_4

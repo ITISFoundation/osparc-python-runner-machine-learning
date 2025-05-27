@@ -1,0 +1,7 @@
+services:
+  osparc-python-runner-tensorflow:
+    depends_on: 
+      - common
+    build:
+      context: ./osparc-python-runner-tensorflow
+      dockerfile: Dockerfile

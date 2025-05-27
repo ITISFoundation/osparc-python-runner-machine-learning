@@ -1,0 +1,14 @@
+settings:
+  - name: Resources
+    type: Resources
+    value:
+      Limits:
+        NanoCPUs: 0
+        MemoryBytes: 0
+      Reservations:
+        NanoCPUs: 0
+        MemoryBytes: 0
+        GenericResources:
+          - DiscreteResourceSpec:
+              Kind: VRAM
+              Value: 1

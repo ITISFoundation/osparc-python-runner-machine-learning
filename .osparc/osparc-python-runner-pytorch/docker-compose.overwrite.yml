@@ -1,0 +1,7 @@
+services:
+  osparc-python-runner-pytorch:
+    depends_on: 
+      - common
+    build:
+      context: ./osparc-python-runner-pytorch
+      dockerfile: Dockerfile

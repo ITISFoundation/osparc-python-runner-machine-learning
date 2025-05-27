@@ -1,0 +1,14 @@
+name: "Base runner-ml image"
+thumbnail:
+description: "used only for building not to be published"
+key: simcore/services/comp/common
+version: 0.0.0
+integration-version: 2.0.0
+type: dynamic
+authors:
+  - name: "Andrei Neagu"
+    email: "neagu@itis.swiss"
+    affiliation: "IT'IS Foundation"
+contact: "neagu@itis.swiss"
+inputs: {}
+outputs: {}

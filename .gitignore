@@ -1,0 +1,8 @@
+# not interested in storing this file
+docker-compose.yml
+
+
+*.ignore.*
+
+.venv/
+docker-compose.yml
