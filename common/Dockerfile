@@ -38,9 +38,6 @@ COPY --chown=${SC_USER_NAME}:${SC_USER_NAME} main.py main.py
 ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64:${LD_LIBRARY_PATH}
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends parallel \
-    && rm -rf /var/lib/apt/lists/*
 
 ENTRYPOINT [ "/bin/sh", "docker/entrypoint.sh", "/bin/sh", "-c" ]
 CMD ["run"]

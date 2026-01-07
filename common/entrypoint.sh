@@ -69,7 +69,7 @@ else
     echo "Changing ownership properties of files around from $SC_USER_ID to group $CONT_GROUPNAME"
     find / -path /proc -prune -o -user "$SC_USER_ID" -exec chown --no-dereference "$SC_USER_NAME" {} \;
     echo "Changing ownership of /opt/venv to $SC_USER_NAME"
-    find /opt/venv ! -user "$SC_USER_ID" -print0 | parallel -0 -j"$(nproc)" chown --no-dereference "$SC_USER_NAME" {}
+    chown -R "$SC_USER_ID" /opt/venv
 fi
 
 echo "Starting $* ..."
