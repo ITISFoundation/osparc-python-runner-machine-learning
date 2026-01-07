@@ -5,8 +5,8 @@ SHELL = /bin/sh
 
 export IMAGE_PYTORCH=osparc-python-runner-pytorch
 export IMAGE_TENSORFLOW=osparc-python-runner-tensorflow
-export TAG_PYTORCH=1.1.0
-export TAG_TENSORFLOW=1.1.0
+export TAG_PYTORCH=1.1.1
+export TAG_TENSORFLOW=1.1.1
 
 # PYTHON ENVIRON ---------------------------------------------------------------------------------------
 .PHONY: devenv
@@ -28,7 +28,7 @@ define _bumpversion
 	# upgrades as $(subst $(1),,$@) version, commits and tags
 	@docker run -it --rm -v $(PWD):/ml-runner \
 		-u $(shell id -u):$(shell id -g) \
-		itisfoundation/ci-service-integration-library:v2.0.11 \
+		itisfoundation/ci-service-integration-library:v2.2.1 \
 		sh -c "cd /ml-runner && bump2version --verbose --list --config-file $(1) $(subst $(2),,$@)"
 endef
 
@@ -48,7 +48,7 @@ version-pytorch-patch version-pytorch-minor version-pytorch-major: .bumpversion-
 define _create_run_script
 	@docker run -it --rm -v $(PWD):/ml-runner \
 		-u $(shell id -u):$(shell id -g) \
-		itisfoundation/ci-service-integration-library:v2.0.11 \
+		itisfoundation/ci-service-integration-library:v2.2.1 \
 		sh -c "cd /ml-runner && \
 			ooil run-creator \
 				--runscript $(1)/service.cli/run \
@@ -65,7 +65,7 @@ create-run-script: ## assembles run scrips for pytorch and tensorflow
 compose-spec: ## runs ooil to assemble the docker-compose.yml file
 	@docker run -it --rm -v $(PWD):/ml-runner \
 		-u $(shell id -u):$(shell id -g) \
-		itisfoundation/ci-service-integration-library:v2.0.11 \
+		itisfoundation/ci-service-integration-library:v2.2.1 \
 		sh -c "cd /ml-runner && ooil compose"
 
 build: | compose-spec	## build docker image

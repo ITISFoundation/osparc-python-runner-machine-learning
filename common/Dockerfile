@@ -19,8 +19,7 @@ ARG PYTHON_VERSION=3.12.10
 ENV UV_PYTHON_INSTALL_DIR=/opt/uv-python
 RUN mkdir -p /opt/uv-python \
     && uv venv /opt/venv --python=python${PYTHON_VERSION%.*} \
-    && chmod -R a+rx /opt/uv-python \
-    && chown -R ${SC_USER_NAME}:${SC_USER_NAME} /opt/venv
+    && chmod -R a+rx /opt/uv-python
 ENV PATH="/opt/venv/bin:$PATH"
 
 FROM base AS production
