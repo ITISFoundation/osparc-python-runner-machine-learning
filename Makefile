@@ -5,8 +5,8 @@ SHELL = /bin/sh
 
 export IMAGE_PYTORCH=osparc-python-runner-pytorch
 export IMAGE_TENSORFLOW=osparc-python-runner-tensorflow
-export TAG_PYTORCH=1.1.1
-export TAG_TENSORFLOW=1.1.1
+export TAG_PYTORCH=1.1.2
+export TAG_TENSORFLOW=1.1.2
 
 # PYTHON ENVIRON ---------------------------------------------------------------------------------------
 .PHONY: devenv

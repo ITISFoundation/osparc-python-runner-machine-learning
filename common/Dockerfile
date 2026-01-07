@@ -17,10 +17,11 @@ ENV UV_HTTP_TIMEOUT=120
 # Install Python globally for all users
 ARG PYTHON_VERSION=3.12.10
 ENV UV_PYTHON_INSTALL_DIR=/opt/uv-python
+ENV PATH="/opt/venv/bin:$PATH"
 RUN mkdir -p /opt/uv-python \
     && uv venv /opt/venv --python=python${PYTHON_VERSION%.*} \
-    && chmod -R a+rx /opt/uv-python
-ENV PATH="/opt/venv/bin:$PATH"
+    && chmod -R a+rx /opt/uv-python \
+    && uv pip install pipreqs
 
 FROM base AS production
 
