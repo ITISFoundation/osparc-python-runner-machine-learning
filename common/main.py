@@ -46,27 +46,25 @@ def _find_user_code_entrypoint(code_dir: Path) -> Path:
 
 def _ensure_pip_requirements(code_dir: Path) -> Path:
     _logger.info("Searching for requirements file ...")
-    requirements = list(code_dir.rglob("requirements.txt"))
-    if len(requirements) > 1:
-        raise ValueError(f"Many requirements found: {requirements}")
+    requirements_entries = list(code_dir.rglob("requirements.txt"))
+    if len(requirements_entries) > 1:
+        raise ValueError(f"Many requirements found: {requirements_entries}")
 
-    elif not requirements:
+    if not requirements_entries:
         # deduce requirements using pipreqs
-        _logger.info("Not found. Recreating requirements ...")
-        requirements = code_dir / "requirements.txt"
+        requirements_path = Path("/tmp") / "requirements.txt"
+        _logger.info("Not found. Recreating in %s ...", requirements_path)
         subprocess.run(
-            f"pipreqs --savepath={requirements} --force {code_dir}".split(),
+            f"pipreqs --savepath={requirements_path} --force {code_dir}".split(),
             shell=False,
             check=True,
             cwd=INPUT_FOLDER,
         )
+        return requirements_path
 
-        # TODO log subprocess.run
-
-    else:
-        requirements = requirements[0]
-        _logger.info(f"Found: {requirements}")
-    return requirements
+    requirements_path = requirements_entries[0]
+    _logger.info("Found: %s", requirements_path)
+    return requirements_path
 
 
 # TODO: Next version of integration will take care of this and maybe the ENVs as well
