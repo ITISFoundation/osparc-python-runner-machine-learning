@@ -1,5 +1,7 @@
 # not interested in storing this file
 docker-compose.yml
+validation-pytorch/outputs/*.zip
+validation-tensorflow/outputs/*.zip
 
 
 *.ignore.*
