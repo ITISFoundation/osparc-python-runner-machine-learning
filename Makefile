@@ -74,9 +74,7 @@ build: | compose-spec	## build docker image
 # To test built service locally -------------------------------------------------------------------------
 .PHONY: run-pytorch-local
 run-pytorch-local: ## runs pytorch image with local configuration
-	rm -rf validation-pytorch/outputs
-	mkdir -p validation-pytorch/outputs
-	chmod 0777 validation-pytorch/outputs
+	find validation-pytorch/outputs -type f ! -name '.gitkeep' -delete
 	IMAGE_TO_RUN=${IMAGE_PYTORCH} \
 	TAG_TO_RUN=${TAG_PYTORCH} \
 	VALIDATION_DIR=validation-pytorch \
@@ -84,9 +82,7 @@ run-pytorch-local: ## runs pytorch image with local configuration
 
 .PHONY: run-tensorflow-local
 run-tensorflow-local: ## runs tensorflow image with local configuration
-	rm -rf validation-tensorflow/outputs
-	mkdir -p validation-tensorflow/outputs
-	chmod 0777 validation-tensorflow/outputs
+	find validation-tensorflow/outputs -type f ! -name '.gitkeep' -delete
 	IMAGE_TO_RUN=${IMAGE_TENSORFLOW} \
 	TAG_TO_RUN=${TAG_TENSORFLOW} \
 	VALIDATION_DIR=validation-tensorflow \
