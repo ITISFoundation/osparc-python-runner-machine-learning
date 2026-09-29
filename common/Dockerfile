@@ -40,6 +40,5 @@ ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64:${LD_LIBRARY_PATH}
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
 
-ENTRYPOINT [ "/bin/sh", "docker/entrypoint.sh", "/bin/sh", "-c" ]
+ENTRYPOINT [ "/bin/sh", "docker/entrypoint.sh" ]
 CMD ["run"]
-

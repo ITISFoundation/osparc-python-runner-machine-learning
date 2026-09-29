@@ -26,7 +26,7 @@ devenv: .venv  ## create a python virtual environment with tools to dev, run and
 # Builds new service version ----------------------------------------------------------------------------
 define _bumpversion
 	# upgrades as $(subst $(1),,$@) version, commits and tags
-	@docker run -it --rm -v $(PWD):/ml-runner \
+	@docker run -i --rm -v $(PWD):/ml-runner \
 		-u $(shell id -u):$(shell id -g) \
 		itisfoundation/ci-service-integration-library:v2.2.1 \
 		sh -c "cd /ml-runner && bump2version --verbose --list --config-file $(1) $(subst $(2),,$@)"
@@ -46,7 +46,7 @@ version-pytorch-patch version-pytorch-minor version-pytorch-major: .bumpversion-
 
 
 define _create_run_script
-	@docker run -it --rm -v $(PWD):/ml-runner \
+	@docker run -i --rm -v $(PWD):/ml-runner \
 		-u $(shell id -u):$(shell id -g) \
 		itisfoundation/ci-service-integration-library:v2.2.1 \
 		sh -c "cd /ml-runner && \
@@ -63,7 +63,7 @@ create-run-script: ## assembles run scrips for pytorch and tensorflow
 
 .PHONY: compose-spec
 compose-spec: ## runs ooil to assemble the docker-compose.yml file
-	@docker run -it --rm -v $(PWD):/ml-runner \
+	@docker run -i --rm -v $(PWD):/ml-runner \
 		-u $(shell id -u):$(shell id -g) \
 		itisfoundation/ci-service-integration-library:v2.2.1 \
 		sh -c "cd /ml-runner && ooil compose"
@@ -74,6 +74,7 @@ build: | compose-spec	## build docker image
 # To test built service locally -------------------------------------------------------------------------
 .PHONY: run-pytorch-local
 run-pytorch-local: ## runs pytorch image with local configuration
+	find validation-pytorch/outputs -type f ! -name '.gitkeep' -delete
 	IMAGE_TO_RUN=${IMAGE_PYTORCH} \
 	TAG_TO_RUN=${TAG_PYTORCH} \
 	VALIDATION_DIR=validation-pytorch \
@@ -81,6 +82,7 @@ run-pytorch-local: ## runs pytorch image with local configuration
 
 .PHONY: run-tensorflow-local
 run-tensorflow-local: ## runs tensorflow image with local configuration
+	find validation-tensorflow/outputs -type f ! -name '.gitkeep' -delete
 	IMAGE_TO_RUN=${IMAGE_TENSORFLOW} \
 	TAG_TO_RUN=${TAG_TENSORFLOW} \
 	VALIDATION_DIR=validation-tensorflow \
